@@ -1,0 +1,50 @@
+﻿@page
+@model WebApplication1.Pages.Part.DBModel
+@{
+    ViewData["Title"] = "DB";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+
+<script>
+    function del(name,id,obj) {
+        $.getJSON("/ajax/field/delete", { name: name ,id: id }, function (data) {
+        
+            layer.msg(data.msg);
+            $(obj).parent().parent().remove();
+            // reload();
+        });
+    }
+</script>
+
+@foreach (var coll in @Model.collection)
+{
+    <blockquote  class="layui-elem-quote">@coll.Key</blockquote>
+
+
+    <table class="layui-table" >
+      
+            
+                @foreach (var col in @coll.Value)
+                {
+                    if (@col.Item1 == "_id")
+                    {
+                       @Html.Raw($"</tr><tr><th> <button onclick=del('{coll.Key}',{col.Item2},this); class='layui-btn'><i class='layui-icon'></i></button></th>") 
+                    }
+                        <th> @col.Item1:@col.Item2</th>
+               }
+
+
+     
+    </table>
+}
+
+
+
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+  
+     
+    });
+</script>

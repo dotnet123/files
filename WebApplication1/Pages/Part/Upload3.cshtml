@@ -1,0 +1,44 @@
+﻿@page
+@model WebApplication1.Pages.Part.Upload3Model
+@{
+    ViewData["Title"] = "Upload3";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>拖拽上传</legend>
+</fieldset>
+
+<div class="layui-upload-drag" id="test10">
+    <i class="layui-icon"></i>
+    <p>点击上传，或将文件拖拽到此处</p>
+</div>
+
+
+<script>
+layui.use('upload', function(){
+  var $ = layui.jquery
+  ,upload = layui.upload;
+
+  //拖拽上传
+  upload.render({
+    elem: '#test10'
+      , url: '/tools/Upload/'
+    , done: function (res) {
+          //如果上传失败
+          if (res.code > 0) {
+              return layer.msg('上传失败');
+        }
+
+          layer.msg('上传成功');
+          //上传成功
+      }
+      , error: function () {
+        
+      }
+  });
+
+
+
+});
+</script>

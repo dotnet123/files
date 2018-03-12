@@ -1,0 +1,99 @@
+﻿@page
+@model WebApplication1.Pages.Part.MyModel
+@{
+    ViewData["Title"] = "My";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+
+<div class="layui-container">
+    <blockquote class="layui-elem-quote">修改密码</blockquote>
+ 
+    <form class="layui-form layui-form-pane" action="">
+        
+        <input type="hidden" name="id" value="@Model.user.Id" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+           
+        <div class="layui-form-item">
+            <label class="layui-form-label">工号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userid" disabled="disabled" value="@Model.user.UserId" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" disabled="disabled" value="@Model.user.Name" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原始密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="pwd" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="newpwd" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+        </div>
+        
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        
+    </form>
+
+</div>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+  
+       
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+  
+    
+  
+        //监听提交
+        form.on('submit(demo1)', function(data) {
+            //layer.alert(JSON.stringify(data.field),
+            //    {
+            //        title: '最终的提交信息'
+            //    });
+            console.log(data);
+           // alert(data.id);
+            $.post("/ajax/user/resetpwd", { id: data.field.id, pwd: data.field.pwd, newpwd: data.field.newpwd }, function (data) {
+                if (data.code == 0) {
+                    layer.alert(data.msg);
+                } else {
+                    layer.alert(data.msg);
+                }
+            
+            });
+            return false;
+        });
+  
+  
+    });
+</script>
+   
+

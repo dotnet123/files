@@ -1,0 +1,6 @@
+﻿<Config>
+   <ServiceHost>
+    <CancelOrderService>http://192.168.10.104:7777</CancelOrderService>
+  </ServiceHost>
+  <Zookeeper></Zookeeper>
+</Config>

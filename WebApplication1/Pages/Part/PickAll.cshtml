@@ -1,0 +1,37 @@
+﻿@page
+@model WebApplication1.Pages.Part.PickAllModel
+@{
+    ViewData["Title"] = "PickAll";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">可上传</li>
+        <li>可下载</li>
+        <li>仅查看</li>
+     
+    </ul>
+    <div class="layui-tab-content" style="height:100%">
+        <div class="layui-tab-item layui-show">
+            <iframe id="iframeid" src="pick?panId=@Model.panId2&type=1" style="min-height:773px;"  frameborder="0" width="100%" scrolling="yes"   ></iframe>
+        </div>
+        <div class="layui-tab-item">     <iframe id="iframeid" src="pick?panId=@Model.panId2&type=2" style="min-height:773px;"  frameborder="0" width="100%" scrolling="yes"   ></iframe>
+        </div>
+        <div class="layui-tab-item">     <iframe id="iframeid" src="pick?panId=@Model.panId2&type=3" style="min-height:773px;"  frameborder="0" width="100%" scrolling="yes"   ></iframe>
+        </div>
+     
+    </div>
+</div>
+<script>
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+    });
+    layui.use('layer',
+        function () { //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer;
+        });
+</script>
+  
+

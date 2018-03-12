@@ -1,0 +1,359 @@
+﻿@page
+@model WebApplication1.Pages.panModel
+@{
+    ViewData["Title"] = "pan";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+@*<style>
+    #divFly {
+        padding: 2px;
+     
+        position: absolute;
+        z-index: 999; 
+        top:50%;
+        left:38%;
+       
+
+    } 
+</style>*@
+
+
+<div class="layui-btn-group demoTable">
+@if (Model.isAdmin)
+{
+    <button class="layui-btn" id="panadd">新增文件夹</button>
+}
+    <button class="layui-btn" id="wenjianadd">上传文件</button>
+</div>
+    <div id="divFly">
+        
+    </div>
+
+<table class="layui-table" id="test5" lay-filter="test5"></table>
+<div class="layui-btn-group demoTable2">
+    <button id="dde" class="layui-btn" data-type="getCheckData">删除选中行</button>
+</div>
+
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //拖拽上传
+        upload.render({
+            elem: '#wenjianadd'
+            , url: '/tools/Upload/'
+            , accept: 'file'
+            , data: {parentId : @Model.parentId} //可选项。额外的参数，如：{id: 123, abc: 'xxx'}
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+
+                layer.msg('上传成功');
+                reload();
+            }
+            , error: function () {
+
+            }
+        });
+
+
+
+    });
+</script>
+@*{{ (d.ext == "" || d.ext == null) ? '<a class="layui-btn layui-btn-xs" lay-event="edit">编辑权限</a>' : '' }}*@
+
+<script type="text/html" id="barDemo">
+    @*<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail"></a>*@
+    {{#  if(d.ext == "" || d.ext == null){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑权限</a>
+    {{#  } }}
+  
+    @*<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>*@
+</script>
+<style>
+    .mcss {
+        color: tomato;
+    }
+    .hide{display: none}
+    .layui-table-cell {
+        height: 40px;
+        line-height: 40px;}
+</style>
+<script>
+    var parentId = @Model.parentId;
+
+    function c(obj) {
+        var b = $(obj).hasClass("layui-btn-disabled");
+       
+        if (b) {
+            return false;
+        }
+     
+    }
+    $(function () {
+        $("#wenjianadd").addClass("hide");
+        $("#dde").addClass("hide");
+        $("#panadd").addClass("hide");
+        
+       
+
+
+    });
+    $("button#wenjianadd5").click(function () {
+
+        layer.open({
+            type: 2,
+            area: ['700px', '450px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'part/upload3'
+        });
+
+    });
+    $("button#panadd").click(function () {
+        layer.prompt({ title: '输入文件夹名称', formType: 0 }, function (pass, index) {
+
+            $.getJSON("/ajax/pan/add", { name: pass, parentId: parentId }, function (data) {
+                layer.close(index);
+                layer.msg(data.msg);
+
+                reload();
+            });
+
+
+        });
+
+    });
+    $.getJSON("/ajax/bumen", {}, function (json) {
+        var data = json.data;
+        for (var i in data) {
+            var jsonObj = data[i];
+
+            $("#star").append("<option value='" + jsonObj.id + "'>" + jsonObj.name + "</option>");
+        }
+    });
+    function DivFlying2() {
+        //$("#divFly").hide();
+        //$("#divFly").html("");
+        parent.layer.close(mIndex);
+    }
+
+    var mIndex = 0;
+    function DivFlying(src) {
+  
+       
+       // $("#divFly").html("<img src=" + src + " width=300  />"); 
+        mIndex =  parent.layer.open({
+            type: 1, 
+            title: false,
+            closeBtn: 0, shade: 0, fixed :true,
+            area: '300px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img src=' + src + ' width=300  />'
+        });
+    }
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#test5'
+            , url: '/ajax/PAN/'
+            , where: { parentId: parentId}
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , done: function (res, curr, count) {
+                $(".laytable-cell-1-3 > a").addClass("layui-btn-disabled");
+                $(".laytable-cell-1-4 > a").addClass("layui-btn-disabled");
+                
+                ////////
+                ////////
+                $(".aimg").mouseover(function () {
+
+                    DivFlying("/" + $(this).attr("nl"));
+                }); 
+
+                $(".aimg").mouseout(function() {
+                    DivFlying2();
+
+                }); 
+                
+                $.getJSON("/ajax/pan/roles",
+                    { parentid: parentId },
+                    function(obj) {
+
+                        if (obj.data.item1 == true) {
+                            $("#wenjianadd").removeClass("hide");
+                            $("#dde").removeClass("hide");
+                            $("#panadd").removeClass("hide");
+                            $(".laytable-cell-1-3 > a").removeClass("layui-btn-disabled");
+                            $(".laytable-cell-1-4 > a").removeClass("layui-btn-disabled");
+                        }
+                        if (obj.data.item2 == true) {
+                            $("#wenjianadd").removeClass("hide");
+                        
+                            $(".laytable-cell-1-3 > a").removeClass("layui-btn-disabled");
+                            $(".laytable-cell-1-4 > a").removeClass("layui-btn-disabled");
+                        }
+                        if (obj.data.item1 == true) {
+                           
+                            $(".laytable-cell-1-3 > a").removeClass("layui-btn-disabled");
+                           
+                        }
+                    });
+                ////////
+            }
+            , cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , {
+                    field: 'id', width: 80, title: '', templet: function (d) {
+                        if (d.ext == "" || d.ext == null)
+                            return '<a href="pan?parentId=' + d.id + '"><i class="layui-icon" style="font-size: 42px; color: #1E9FFF;">&#xe622;</i></a> ';
+                        if (d.ext.toUpperCase() == "GIF" || d.ext.toUpperCase() == "JPG" || d.ext.toUpperCase() == "JPEG" || d.ext.toUpperCase() == "BMP" || d.ext.toUpperCase() == "PNG")
+                            return '<img class="aimg" nl=' + d.url + ' width=39 src=/images/icons/' + d.ext.toUpperCase() + '.png></img>'
+                        return '<img width=39  src=/images/icons/' + d.ext.toUpperCase() + '.png></img>'
+                    } }
+                , { field: 'name', width: 300, title: '名称', style: "font-weight:bold", @if (Model.isCanUpdateFileName)
+                                                            { @Html.Raw(" edit: 'text'"); } }
+
+                , {
+                    type: 'space', width: 50, title: '查看', templet: function (d) {
+                        if (d.ext != "" && d.ext != null )
+                            return '<a href="part/show?id=' + d.id + '" target="_blank" onclick="return c(this)"  class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary"> 查看 </a> ';
+                        return "";
+                    }}
+                , {
+                    type: 'space', width: 50, title: '下载', templet: function (d) {
+                        if (d.ext != "" && d.ext != null )
+                            return '<a href="part/show?id=' + d.id + '" target="_blank" onclick="return c(this)" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary"> 下载 </a> ';
+                        return "";
+                    }
+                }
+                , { field: 'ext', width: 50, title: '格式' }
+
+                , { field: 'useridx',  width: 80, title: '操作人' }
+                , {
+                    field: 'lasttime', width: 120, title: '上次修改时间', templet: function (d) {
+                        return d.lasttime;
+                    } }
+                , { field: 'seqno', width: 50, title: '排序', @if (Model.isCanUpdateFileName)
+                                                            { @Html.Raw(" edit: 'text'"); }
+                }
+
+
+                //, { field: 'status', width: 80, title: '状态', edit: 'text' }
+                @if (Model.isAdmin)
+                {
+                    @Html.Raw(", { field: 'roles11', width: 250, title: '可上传' }");
+                    @Html.Raw(", { field: 'roles22', width: 250, title: '可下载' }");
+                    @Html.Raw(", { field: 'roles33', width: 250, title: '仅查看' }");
+                    @Html.Raw(", { fixed: 'right', title: '权限', width: 100, align: 'center', toolbar: '#barDemo' }");
+                }
+
+            ]]
+            , skin:'line'
+        });
+        //监听工具条
+        table.on('tool(test5)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                layer.msg('ID：' + data.id + ' 的查看操作');
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                //layer.alert('编辑行：<br>' + JSON.stringify(data))
+
+                var index=   parent.layer.open({
+                    type: 2,
+                    title:'请勾选',
+                    area: ['700px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    cancel: function () {
+                        reload();
+                        //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});
+                    },
+                    content: 'part/pickall?panid=' + data.id
+                });
+
+
+               // parent.layer.full(index);
+            }
+        });
+        //监听单元格编辑
+        table.on('edit(test5)', function (obj) {
+            var value = obj.value //得到修改后的值
+                , data = obj.data //得到所在行所有键值
+                , field = obj.field; //得到字段
+
+            // layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+
+            $.getJSON("/ajax/fieldupdate", { table: "pan", id: data.id, key: field, value: value }, function (json) {
+                layer.msg(json.msg);
+               // reload();
+            });
+
+        });
+
+        var $ = layui.$, active = {
+            getCheckData: function () {
+
+                layer.confirm('您确定要删除吗？', {
+                    btn: ['Yes', 'No'] //按钮
+                }, function () {
+
+                    //获取选中数据
+                    var checkStatus = table.checkStatus('test5')
+                        , data = checkStatus.data;
+                    //layer.alert(JSON.stringify(data));
+                    var ids = [];
+                    for (var a in data) {
+                        ids.push(data[a].id);
+                    }
+                    console.log(ids.join());
+                    $.getJSON("/ajax/fieldupdate", { table: "pan", id: ids.join(), key: "status", value: -1 }, function (json) {
+                        layer.msg(json.msg);
+                        reload();
+                    });
+
+
+                }, function () {
+
+                });
+
+            }
+            , getCheckLength: function () { //获取选中数目
+                var checkStatus = table.checkStatus('test5')
+                    , data = checkStatus.data;
+                layer.msg('选中了：' + data.length + ' 个');
+            }
+            , isAll: function () { //验证是否全选
+                var checkStatus = table.checkStatus('test5');
+                layer.msg(checkStatus.isAll ? '全选' : '未全选');
+            }
+        };
+
+        $('.demoTable2 .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+<script>
+    $(function () { 
+
+        $.getJSON("/ajax/pan/path", { parentid: parentId }, function (json) {
+            $(window.parent.document).contents().find("#modulemenu > .nav").find(".path").remove();
+            $(window.parent.document).contents().find("#mingnav").after(json.msg); 
+        });
+    })
+    // window.parent.a();
+  
+</script>
+

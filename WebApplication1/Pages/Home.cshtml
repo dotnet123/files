@@ -1,0 +1,143 @@
+﻿@page
+@model WebApplication1.Pages.HomeModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <script src="~/js/jquery.min.js"></script>
+    <link href="~/css/zh-cn.default.css" rel="stylesheet" />  
+    
+    <!--[if lt IE 9]>
+    <script src='http://cdn.zentaopm.com/9.6.3/js/html5shiv/min.js?v=9.6.3' type='text/javascript'></script>
+    <script src='http://cdn.zentaopm.com/9.6.3/js/respond/min.js?v=9.6.3' type='text/javascript'></script>
+    <![endif]-->
+    <!--[if lt IE 10]>
+    <script src='http://cdn.zentaopm.com/9.6.3/js/jquery/placeholder/min.js?v=9.6.3' type='text/javascript'></script>
+    <![endif]-->
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+
+</head>
+<body class="m-my-index" style="">
+    <header id="header">
+        <div id="topbar">
+            <div class="pull-right" id="topnav">
+                <div class="dropdown" id="userMenu">
+                    <a href="javascript:;"><i class="layui-icon">&#xe612;</i> 当前用户: @Model.user?.Name  </a><ul class="dropdown-menu"></ul>
+                </div><a href="javascript:void(0);" onclick="myout();">退出</a>
+         
+            </div>
+            <h5 id="companyname">
+                网盟项目管理系统
+            </h5>
+        </div>
+        <nav id="mainmenu">
+            <ul class="nav">
+                <li class="active" data-id="my"><a href="javascript:void(0);" onclick="onchage(this,'pan?parentId=1');" class="active"><i class="layui-icon">&#xe68e;</i>   <span> 我的网盘</span></a></li>
+                @if (Model.isAdmin) {
+                <li data-id="product"><a href="javascript:void(0);" onclick="onchage(this,'part/bumen');">组织</a></li>
+                <li data-id="product"><a href="javascript:void(0);" onclick="onchage(this,'part/userpage');">员工</a></li>
+                }<li data-id="qa"><a href="javascript:void(0);" id="my" onclick="onchage(this,'part/my');">我的帐号</a></li>
+            </ul>
+            <div class="input-group input-group-sm" id="searchbox">
+                <div class="input-group-btn" id="typeSelector">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span id="searchTypeName">关键字</span> @*<span class="caret"></span>*@
+                    </button><input type="hidden" name="searchType" id="searchType" value="bug">
+
+                </div><input type="text" name="searchQuery" id="searchQuery" value="" onclick="this.value=&quot;&quot;" onkeydown="if(event.keyCode==13) shortcut()" class="form-control" placeholder="">
+                <div id="objectSwitcher" class="input-group-btn"><a href="javascript:shortcut();" class="btn">GO! </a></div>
+            </div>
+        </nav>
+        <nav id="modulemenu">
+            <ul class="nav">
+                <li data-id="account" id="mingnav">
+                    <a href='javascript:void(0);' onclick='onchage2(this, "pan?parentId=1")'><i class="layui-icon">&#xe7a0;</i>  &nbsp;全部&nbsp;</a>
+                </li>
+              
+             
+            </ul>
+        </nav>
+    </header>
+
+    <script>
+        layui.use('layer', function () { //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+        });
+    </script>
+    <script>
+       
+      
+        function setIframeHeight(iframe) {
+            if (iframe) {
+                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                if (iframeWin.document.body) {
+                    iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                }
+            }
+        };
+
+        window.onload = function () {
+            setIframeHeight(document.getElementById('iframeid'));
+        };
+
+        function reinitIframe() {
+            var iframe = document.getElementById("iframeid");
+            try {
+                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                var height = Math.max(bHeight, dHeight);
+                iframe.height = height;
+                console.log(height);
+            } catch (ex) { }
+        }
+        window.setInterval("reinitIframe()", 2000);
+        function onchage(obj, url) {
+            $(".nav > li.active").find("a").removeClass("active");
+            $(".nav > li.active").removeClass("active");
+            $(obj).addClass("active");
+            $(obj).parent().addClass("active");
+            document.getElementById("iframeid").src = url; 
+
+        }
+        function myout() {
+            $.getJSON("/ajax/user/out", { }, function (data) {
+                
+                layer.msg(data.msg);
+
+                location.href = "login.html";
+            });
+        }
+        function onchage2(obj, url) {
+        
+            document.getElementById("iframeid").src = url;
+
+        }
+        function a(p) { alert(p); }
+        function reload2() {
+
+            document.getElementById("iframeid").src = document.getElementById("iframeid").src; 
+        }
+     
+    </script>
+    <div id="wrap">
+        <div class="outer" style="min-height: 773px;">
+
+            <iframe id="iframeid" src="pan" style="min-height: 773px;" frameborder="0" width="100%" scrolling="no"  onload="setIframeHeight(this)" ></iframe>
+
+        </div>
+
+
+    </div>
+    @*<div id="footer">
+        999999
+    </div>*@
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@page
+@using WebApplication1.Pages
+@model WebApplication1.Pages.AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+<link href="~/js/uploadfile.css" rel="stylesheet">
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/jquery.form.js"></script>
+<script src="~/js/jquery.uploadfile.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="fileuploader">Upload</div>
+    </div>
+</div>
+<div id="extrabutton" class="ajax-file-upload-green">开始上传</div>
+
+
+@*<form method="POST" enctype="multipart/form-data">
+    <div>Name: <input name="name" /></div>
+    <input type="file" name="file"/>
+    <input type="submit" asp-page-handler="Ming"
+           asp-page="./tools/UploadFile" value="测试" />
+</form>*@
+<script>
+
+    $(document).ready(function () {
+        var extraObj = $("#fileuploader").uploadFile({
+            url: "/tools/Upload",
+            statusBarWidth: 'auto',
+            dragdropWidth: 'auto',
+            showDelete: false,
+            showDownload: false,
+            showCancel:false,
+            autoSubmit: false,
+            showProgress: true,
+            extraHTML: function () {
+             
+                var html = "<div><b>名称:</b><input type='text' name='tags' value='' /> <br/>";
+                html += "</div>";
+                return html;
+            },
+            afterUploadAll: function(obj) {
+                console.log("-------");
+                console.log(obj);
+                console.log("-------");
+            },
+            deleteCallback: function (data, pd) {
+                $.post("../Home/DeleteFile?url=" + data.url,
+                    function (resp, textStatus, jqXHR) {
+                        //Show Message
+                        console.log(resp, textStatus);
+                        alert(resp.msg);
+                        pd.statusbar.hide(); //You choice.
+                    });
+            },
+            downloadCallback: function (json, pd) {
+                console.log(pd);
+                window.open('../Home/DownloadFile?url=' + json.url, "_blank");
+            }
+        });
+        $("#extrabutton").click(function () {
+            extraObj.startUpload();
+        });
+    });
+</script>

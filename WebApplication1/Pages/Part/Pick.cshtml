@@ -1,0 +1,131 @@
+﻿@page
+@model WebApplication1.Pages.Part.PickModel
+@{
+    ViewData["Title"] = "Pick";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+    int i = 0;
+}
+
+<button class="layui-btn layui-btn-primary" id="pp">全选</button>
+<button class="layui-btn layui-btn-primary" id="pp2">全不选</button>
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        @foreach (var x in Model.buMenLst)
+        {
+            @if (x.Id== 1515131137)
+             {
+                 continue;
+             }
+            @if (i == 0)
+            {
+                <li class="layui-this">@x.Name</li>
+            }
+            else
+            {
+                <li>@x.Name</li>
+            }
+            i++;
+        }
+      
+     
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        
+    
+        @{i = 0;}
+        @foreach (var x in Model.buMenLst)
+        {
+            @if (x.Id== 1515131137)
+             {
+                 continue;
+             }
+            var p1 = "";
+            @if (i == 0) { p1 = "layui-show"; }
+
+            <div class="layui-tab-item @p1">
+
+                @{var users = Model.userLst.Where(p => p.BuMenId == x.Id).OrderByDescending(p => p.SeqNo).ToList();
+
+
+                <div class="layui-form-item">
+                   
+                    <form class="layui-form" action="">
+                            @foreach (var user in users)
+                            {
+                               
+
+
+                                <input type="checkbox"  @if (Model.roles.Contains(@user.Id))
+                                { @Html.Raw("checked='checked'");
+                                } name="likewrite" value="@user.Id" title="@user.Name"/>
+
+                            }
+                            </form>
+
+                </div>
+                   
+                }
+            </div>
+         
+            i++;
+        }
+    </div>
+</div>
+<button class="layui-btn" id="tj">提交</button>
+
+<script>
+   
+    var panid= @Model.panId2;
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+    });
+    //  var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    $("button#tj").click(function () {
+
+        // var tt = $("input[name='likewrite']:checked").val();
+        var ids = [];
+        $('input[name="likewrite"]').each(function () {
+       
+            if ($(this).prop('checked') == true) {
+                ids.push($(this).val());
+               
+            }
+        });
+
+        
+        $.getJSON("/ajax/pan/updateroles", { panid: panid, userids: ids.join(),type:@Model.type2 }, function (data) {
+            //alert(data.msg);
+            parent.layer.msg(data.msg, { icon: 1 });
+            // parent.layer.close(index);
+            // window.parent.reload2();
+        });
+
+
+      
+
+    });
+
+
+    
+    layui.use('form', function(){
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        $("button#pp").click(function() {
+
+             $("input[name='likewrite']").prop("checked", true);
+           
+            form.render();
+        });
+        $("button#pp2").click(function() {
+
+            $("input[name='likewrite']").prop("checked", false);
+           
+            form.render();
+        });
+    });
+
+</script>
+
+
