@@ -13164,11 +13164,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "E:\\github.com\\shihang\\files\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "E:\\github.com\\files\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "E:\\github.com\\shihang\\files\\WebApplication1\\WebApplication1.csproj",
+      "projectPath": "E:\\github.com\\files\\WebApplication1\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "E:\\github.com\\shihang\\files\\WebApplication1\\obj\\",
+      "outputPath": "E:\\github.com\\files\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Users\\admin\\.dotnet\\NuGetFallbackFolder",
