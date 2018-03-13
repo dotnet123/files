@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Biz;
 
 namespace WebApplication1.Models
 {
@@ -43,5 +44,22 @@ namespace WebApplication1.Models
         public int SeqNo { get; set; }
         [LiteDB.BsonField("status")]
         public int Status { get; set; }
+
+
+        [LiteDB.BsonField("userid")]
+        public long UserId { get; set; }
+
+
+        [LiteDB.BsonIgnore]
+        public User User
+        {
+            get
+            {
+                
+                var user = DbHelper.GetFirst<User>(P => P.Id == this.UserId);
+
+                return user??new User();
+            }
+        }
     }
 }
