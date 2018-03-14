@@ -5,11 +5,11 @@
     Layout = "~/Pages/Part/Layout1.cshtml";
 }
 <div class="layui-btn-group demoTable">
-    <a class="layui-btn" id="bumenadd" href="edit">新增</a>
+    <a class="layui-btn" id="bumenadd" href="edit">新增客户</a>
 </div>
 <table class="layui-table" id="test3" lay-filter="test3"></table>
 <div class="layui-btn-group demoTable">
-    <button class="layui-btn" data-type="getCheckData">删除选中行</button>
+    <button class="layui-btn" data-type="getCheckData">删除选中客户</button>
 </div>
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" value="{{d.huikuanstatus}}" lay-skin="switch" disabled="disabled" lay-text="已回|未回" lay-filter="sexDemo" {{ d.huikuanstatus == 1 ? 'checked' : '' }}>
