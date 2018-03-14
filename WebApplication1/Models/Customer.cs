@@ -6,6 +6,30 @@ using WebApplication1.Biz;
 
 namespace WebApplication1.Models
 {
+    public class Record
+    {
+        public long customerId { get; set; }
+        public int type { get; set; }
+        public DateTime date { get; set; }
+        public string content { get; set; }
+
+
+        public long  userid { get; set; }
+
+        [LiteDB.BsonIgnore]
+        public User User
+        {
+            get
+            {
+
+                var user = DbHelper.GetFirst<User>(P => P.Id == this.userid);
+
+                return user ?? new User();
+            }
+        }
+
+
+    }
     public class Customer
     {
         public long Id { get; set; }
@@ -31,10 +55,10 @@ namespace WebApplication1.Models
 
 
         [LiteDB.BsonField("visitrecordlist")]
-        public List<Tuple<DateTime,string>> VisitRecordList { get; set; }
+        public List<Record> VisitRecordList { get; set; }
 
         [LiteDB.BsonField("huikuanlist")]
-        public List<Tuple<DateTime, string>> HuiKuanList { get; set; }
+        public List<Record> HuiKuanList { get; set; }
 
 
         [LiteDB.BsonField("logtime")]
@@ -61,5 +85,10 @@ namespace WebApplication1.Models
                 return user??new User();
             }
         }
+
+
+
+
+
     }
 }
