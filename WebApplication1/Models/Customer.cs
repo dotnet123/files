@@ -73,6 +73,10 @@ namespace WebApplication1.Models
         [LiteDB.BsonField("userid")]
         public long UserId { get; set; }
 
+        [LiteDB.BsonIgnore]
+        public string UserName {
+            get { return this.User.Name; }
+        }
 
         [LiteDB.BsonIgnore]
         public User User

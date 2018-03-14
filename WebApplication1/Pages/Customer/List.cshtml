@@ -11,7 +11,12 @@
 <div class="layui-btn-group demoTable">
     <button class="layui-btn" data-type="getCheckData">删除选中行</button>
 </div>
-
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="sex" value="{{d.huikuanstatus}}" lay-skin="switch" disabled="disabled" lay-text="已回|未回" lay-filter="sexDemo" {{ d.huikuanstatus == 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="usernameTpl">
+    <a href="/customer/edit?customerid={{d.id}}" class="layui-table-link" target="_blank">{{ d.companyname }}</a>
+</script>
 <script>
 
 
@@ -24,9 +29,16 @@
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             , cols: [[
                 { type: 'checkbox', fixed: 'left' }
-                , { field: 'id', width: 100, title: 'ID', sort: true }
-                , { field: 'companyname', width: 350, title: '公司名称', edit: 'text' }
-                , { field: 'seqno', width: 80, title: '排序', edit: 'text' }
+                , { field: 'id', width: 80, title: '编号', sort: true }
+                , { field: 'companyname',  title: '公司名称', templet: '#usernameTpl' }
+                , { field: 'contacts', width: 100, title: '联系人' }
+                , { field: 'tel', width: 170, title: '联系电话' }
+                
+                , { field: 'huikuanstatus', title: '是否回款', width: 110, templet: '#switchTpl', unresize: true }
+                , { field: 'contractamount', width: 150, title: '签约金额' }
+                , { field: 'logtime', width: 120, title: '登记日期' }
+                , { field: 'username', width: 90, title: '登记人' }
+                , { field: 'seqno', width: 60, title: '排序', edit: 'text' }
                 //, { field: 'status', title: '状态', edit: 'text' }
 
             ]]
@@ -43,7 +55,7 @@
                 layer.msg("超级管理员为系统设定,不能修改");
                 return;
             }
-            $.getJSON("/ajax/fieldupdate", { table: "bumen", id: data.id, key: field, value: value }, function (json) {
+            $.getJSON("/ajax/fieldupdate", { table: "customer", id: data.id, key: field, value: value }, function (json) {
                 layer.msg(json.msg);
                 reload();
             });
@@ -70,7 +82,7 @@
                         ids.push(data[a].id);
                     }
                     console.log(ids.join());
-                    $.getJSON("/ajax/fieldupdate", { table: "bumen", id: ids.join(), key: "status", value: -1 }, function (json) {
+                    $.getJSON("/ajax/fieldupdate", { table: "customer", id: ids.join(), key: "status", value: -1 }, function (json) {
                         layer.msg(json.msg);
                         reload();
                     });

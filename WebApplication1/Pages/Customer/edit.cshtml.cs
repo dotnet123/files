@@ -72,18 +72,28 @@ namespace WebApplication1.Pages.Customer
         public async Task<IActionResult> OnPostSaveAsync(Models.Customer customer)
         {
            var  customer2 = DbHelper.GetFirst<Models.Customer>(c => c.Id == customer.Id);
+
+
+
+            customer.UserId = UserHelper.getcurrUserId(Request);
             if (customer2 == null)
             {
          
             customer.Status = 0;
     
             customer.SeqNo = 1;
+
             DbHelper.Add(customer);
             }
             else
             {
                 customer2.CompanyName = customer.CompanyName;
                 customer2.Contacts = customer.Contacts;
+                customer2.HuiKuanStatus = customer.HuiKuanStatus;
+                customer2.Address = customer.Address;
+                customer2.Contacts = customer.Contacts;
+                customer2.Tel = customer.Tel;
+                customer2.UserId= UserHelper.getcurrUserId(Request);
                 DbHelper.Update(customer2);
             }
           

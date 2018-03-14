@@ -94,27 +94,24 @@
     </div>
     <div class="layui-col-md6">
         <div class="layui-row">
-            <div class="layui-col-xs4">
+            <div class="layui-col-xs2">
                 <div class="layui-row">
                     <div class="layui-col-md12">
-                        <input type="text" class="layui-input" id="test19" lay-key="1">
+                        <input type="text" class="layui-input" id="test19" lay-key="1" style="width: 120px">
                     </div>
                 </div>
                 <div class="layui-row" style="padding-top: 10px;">
                     <div class="layui-col-md12">
                         <input type="hidden" id="tjtype" value="1"/>
-                        <button class="layui-btn" id="tj1" lay-submit="" lay-filter="demo1">提交</button>
+                        <button class="layui-btn" id="tj1" lay-submit="" lay-filter="demo1" style="width: 120px">提交记录</button>
                     </div>
                 </div>
                    
             </div>
-            <div class="layui-col-xs8">
+            <div class="layui-col-xs10">
 
-
-                <div class="layui-input-inline">
-
-                    <textarea placeholder="请输入拜访记录" id="visitrecord" class="layui-textarea"></textarea>
-                </div>
+                    <textarea placeholder="请输入拜访记录" id="visitrecord" class="layui-textarea" style="width: 95%"></textarea>
+               
 
             </div>
         </div>
@@ -276,6 +273,7 @@
         element.on('tab(test1)', function() {
             var id = this.getAttribute('lay-id');
             $("#tjtype").val(id);
+            $("#visitrecord").val('');
             if (id == "1") {
                 $("#visitrecord").attr("placeholder", "请输入拜访记录");
 
