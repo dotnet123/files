@@ -109,11 +109,38 @@
                    
             </div>
             <div class="layui-col-xs10">
-
-                    <textarea placeholder="请输入拜访记录" id="visitrecord" class="layui-textarea" style="width: 95%"></textarea>
+                <div id="div1" style="height: 0px;">
+                   
+                </div>
+                <textarea placeholder="请输入拜访记录" id="visitrecord"  type="hidden" class="layui-textarea" ></textarea>
                
 
             </div>
+            <style>
+                #div1 .w-e-text-container {
+                    height: 200px;
+                }
+                .text {
+                    border: 1px solid #ccc;
+                    height: 200px;
+                }
+            </style>
+            
+            <script type="text/javascript">
+                //var E = window.wangEditor;
+                //var editor = new E('#div1');
+                //var $text1 = $('#visitrecord');
+                //editor.customConfig.onchange = function (html) {
+                //    // 监控变化，同步更新到 textarea
+                //    $text1.val(html);
+                //}
+                //editor.customConfig.uploadImgShowBase64 = true;  // 使用 base64 保存图片
+                //editor.customConfig.zIndex = 100;
+                //editor.customConfig.height = 200;
+                //editor.create();
+                //// 初始化 textarea 的值
+                //$text1.val(editor.txt.html());
+            </script>
         </div>
         <div class="layui-tab" lay-filter="test1">
             <ul class="layui-tab-title">
