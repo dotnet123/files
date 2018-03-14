@@ -36,7 +36,7 @@ namespace WebApplication1.Pages.Customer
             if (customer == null)
             {
 
-                return new JsonResult(new { code = 1, msg = "请先建客户档案" });
+                return new JsonResult(new { code = 1, msg = "请先建客户档案",v1=new List<Record>() , v2 = new List<Record>() });
             }
             var v1 = customer.VisitRecordList ?? new List<Record>();
             var v2 = customer.HuiKuanList ?? new List<Record>();
