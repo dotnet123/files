@@ -16,6 +16,9 @@ namespace WebApplication1.Models
         public int SeqNo { get; set; }
         [LiteDB.BsonField("status")]
         public int Status { get; set; }
+
+        [LiteDB.BsonField("remark")]
+        public string remark { get; set; }
     }
     public class User
     {

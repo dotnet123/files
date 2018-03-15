@@ -4,22 +4,28 @@
     ViewData["Title"] = "List";
     Layout = "~/Pages/Part/Layout1.cshtml";
 }
+<script src="/js/jquery-2.2.4.min.js"></script>
+<script src="/js/win10.child.js"></script>
 <div class="layui-btn-group demoTable">
-    <a class="layui-btn" id="bumenadd" href="edit">新增客户</a>
+    <a class="layui-btn" id="bumenadd" onclick="return f2('')"  href="edit">新增客户</a>
 </div>
 <table class="layui-table" id="test3" lay-filter="test3"></table>
 <div class="layui-btn-group demoTable">
-    <button class="layui-btn" data-type="getCheckData">删除选中客户</button>
+    <button class="layui-btn" data-type="getCheckData">删除选中</button>
 </div>
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" value="{{d.huikuanstatus}}" lay-skin="switch" disabled="disabled" lay-text="已回|未回" lay-filter="sexDemo" {{ d.huikuanstatus == 1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="usernameTpl">
-    <a href="/customer/edit?customerid={{d.id}}" class="layui-table-link" target="_blank">{{ d.companyname }}</a>
+    <a href="/customer/edit?customerid={{d.id}}" onclick="return f2({{d.id}})" class="layui-table-link" >{{ d.companyname }}</a>
 </script>
 <script>
 
-
+    function f2(id) {
+        Win10_child.openUrl('/customer/edit?customerid=' + id,
+            '<img class=\'icon\' src=\'./img/icon/win10.png\'/>客户', [['90%', '90%'], ['5%', '5%']]);
+        return false;
+    }
     layui.use('table', function () {
         var table = layui.table;
 

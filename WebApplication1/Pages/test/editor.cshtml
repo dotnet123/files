@@ -23,6 +23,12 @@
         $text1.val(html);
     }
     editor.customConfig.uploadImgShowBase64 = true;  // 使用 base64 保存图片
+    editor.customConfig.menus = [
+        'head',
+        'bold',
+        'italic',
+        'underline'
+    ];
     editor.create();
     // 初始化 textarea 的值
     $text1.val(editor.txt.html());

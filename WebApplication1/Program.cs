@@ -19,24 +19,29 @@ namespace WebApplication1
         {
             //DbHelper.Add(new Pan { Id = 1, Name = "全部", SeqNo = 1, Status = 1 });
             // DbHelper.Add(new BuMen { Id = Util.GetCurrentTimeUnix(), Name = "test", SeqNo = 1, Status = 1 });
-            //var t = DbHelper.GetFirst<BuMen>(p => p.Name != null);
+            //var list = DbHelper.GetAll<BuMen>();
+            //foreach (var i in list)
+            //{
+            //    i.remark = "";
+            //    DbHelper.Update(i);
+            //}
+            // DbHelper.SetValue("BuMen", t.Id, "Name", t.Name + "125");
 
-           // DbHelper.SetValue("BuMen", t.Id, "Name", t.Name + "125");
-
-            //t = DbHelper.GetFirst<BuMen>(p => p.Id == 1515131137);
-            //t.Status = 1;
+            //var t = DbHelper.GetFirst<BuMen>(p => p.Id == 1515131137);
+            //t.remark = "超级管理员为系统设定,无法删除";
+            ////t.Status = 1;
             //DbHelper.Update(t);
             //using (var db = new LiteDatabase(@"MyData.db"))
             //{
-                //var collection = db.GetCollection<Pan>(typeof(Pan).Name.ToLower());
-              
-                //collection.Delete(p => p.Status == -1);
-                //var ret = collection.FindAll();
-                //foreach (var r in ret)
-                //{
-                //    r.UserId = 1515154729;
-                //    collection.Update(r);
-                //}
+            //var collection = db.GetCollection<Pan>(typeof(Pan).Name.ToLower());
+
+            //collection.Delete(p => p.Status == -1);
+            //var ret = collection.FindAll();
+            //foreach (var r in ret)
+            //{
+            //    r.UserId = 1515154729;
+            //    collection.Update(r);
+            //}
             //}
             BuildWebHost(args).Run();
         }

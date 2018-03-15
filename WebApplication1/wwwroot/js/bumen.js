@@ -33,7 +33,7 @@ layui.use('table', function () {
             , { field: 'id', width: 100, title: 'ID', sort: true }
             , { field: 'name', width: 350, title: '部门名称', edit: 'text' }
             , { field: 'seqno', width: 80, title: '排序', edit: 'text' }
-            //, { field: 'status', title: '状态', edit: 'text' }
+            , { field: 'remark', title: '备注说明', edit: 'text' }
 
         ]]
     });
