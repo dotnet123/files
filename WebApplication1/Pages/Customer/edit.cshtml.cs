@@ -45,7 +45,7 @@ namespace WebApplication1.Pages.Customer
             return new JsonResult(new { code = 0, msg = "保存成功",v1,v2 });
         }
 
-        public async Task<IActionResult> OnGetSaveRecordAsync(Record record)
+        public async Task<IActionResult> OnPostSaveRecordAsync(Record record)
         {
             var customer = DbHelper.GetFirst<Models.Customer>(c => c.Id == record.customerId);
             if (customer == null)
