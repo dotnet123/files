@@ -21,7 +21,7 @@
 
 <script type="text/html" id="switchTpl">
 
-    <select name="interest" onchange="show_payee(this,{{d.id}});" id="select{{d.id}}" lay-ignore="">
+    <select name="interest" style="line-height:25px;height: 25px;" onchange="show_payee(this,{{d.id}});" id="select{{d.id}}" lay-ignore="">
         <option value=""></option>
         @foreach (var x in Model.buMenLst)
         {
@@ -76,13 +76,15 @@
             , cols: [[
                 { type: 'checkbox', fixed: 'left' }
                 , { field: 'id', width: 100, title: 'ID', sort: true }
-                , { field: 'bumenid', title: '部门', minWidth: 120, templet: '#switchTpl', unresize: true }
                 , { field: 'userid', width: 150, title: '工号', edit: 'text' }
-                //, { field: 'pwd', width: 150, title: '密码', edit: 'text' }
                 , { field: 'name', width: 150, title: '姓名', edit: 'text' }
+                , { field: 'bumenid', title: '部门', Width: 120, templet: '#switchTpl', unresize: true }
+              
+                //, { field: 'pwd', width: 150, title: '密码', edit: 'text' }
+               
                 , { field: 'seqno', width: 80, title: '排序', edit: 'text' }
                 //, { field: 'status', width: 80, title: '状态', edit: 'text' }
-                ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
+                ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
             ]]
         });
 

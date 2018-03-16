@@ -26,7 +26,7 @@
 </head>
 <body class="m-my-index" style="">
     <header id="header">
-        <div id="topbar">
+        @*<div id="topbar">
             <div class="pull-right" id="topnav">
                 <div class="dropdown" id="userMenu">
                     <a href="javascript:;"><i class="layui-icon">&#xe612;</i> 当前用户: @Model.user?.Name  </a><ul class="dropdown-menu"></ul>
@@ -34,15 +34,15 @@
          
             </div>
             <h5 id="companyname">
-                网盟项目管理系统
+                
             </h5>
-        </div>
+        </div>*@
         <nav id="mainmenu">
             <ul class="nav">
                 <li class="active" data-id="my"><a href="javascript:void(0);" onclick="onchage(this,'pan?parentId=1');" class="active"><i class="layui-icon">&#xe68e;</i>   <span> 我的网盘</span></a></li>
                 @if (Model.isAdmin) {
                 @*<li data-id="product"><a href="javascript:void(0);" onclick="onchage(this,'part/bumen');">组织</a></li>*@
-                <li data-id="product"><a href="javascript:void(0);" onclick="onchage(this,'part/userpage');">员工</a></li>
+                @*<li data-id="product"><a href="javascript:void(0);" onclick="onchage(this,'part/userpage');">员工</a></li>*@
                 }@*<li data-id="qa"><a href="javascript:void(0);" id="my" onclick="onchage(this,'part/my');">我的帐号</a></li>*@
             </ul>
             <div class="input-group input-group-sm" id="searchbox">

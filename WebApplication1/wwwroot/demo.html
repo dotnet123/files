@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
@@ -69,32 +69,49 @@
 
         }
     </script>
+    <script>
+        function myout() {
+            $.getJSON("/ajax/user/out", { }, function (data) {
+                
+                layer.msg(data.msg);
+
+                location.href = "login.html";
+            });
+        }
+    </script>
 </head>
 <body>
 <div id="win10">
     <div class="desktop">
         <div id="win10-shortcuts" class="shortcuts-hidden">
-       
+
             <div class="shortcut" onclick="Win10.openUrl('/home','<img class=\'icon\' src=\'./img/icon/doc.png\'/>在线文档')">
-                <img class="icon" src="./img/icon/doc.png"/>
+                <img class="icon" src="./img/icon/doc.png" />
                 <div class="title">网盘</div>
             </div>
-        
+
             <div class="shortcut" onclick="Win10.openUrl('/part/bumen','<img class=\'icon\' src=\'./img/icon/kyzg.png\'/>组织')">
-                <img class="icon" src="./img/icon/kyzg.png"/>
+                <img class="icon" src="./img/icon/kyzg.png" />
                 <div class="title">组织</div>
             </div>
             <div class="shortcut" onclick='Win10.openUrl("/customer/list","<i class=\"fa fa-gears  icon purple\"></i>客户系统")'>
                 <i class="fa fa-gears  icon purple"></i>
                 <div class="title">客户系统</div>
             </div>
+            <div class="shortcut" onclick='Win10.openUrl("/part/userpage","<i class=\"fa fa-gears  icon purple\"></i>员工管理")'>
+                <i class="fa fa-gears  icon purple"></i>
+                <div class="title">员工管理</div>
+            </div>
             <div class="shortcut" onclick="Win10.openUrl('/part/my','<i class=fa fa-user icon black-green></i>我的账户', [['500px', '480px'],''])">
                 <i class="fa fa-user icon black-green"></i>
                 <div class="title">我的账户</div>
             </div>
-    
+            <div class="shortcut" onclick="myout();">
+                <i class="fa fa-user icon black-green"></i>
+                <div class="title">注销</div>
+            </div>
+            
 
-        
         </div>
         <div id="win10-desktop-scene"></div>
     </div>
