@@ -111,7 +111,7 @@ body{background-color: #036}
         var ck = $("#keepLoginon").prop('checked');
         $.post("/ajax/user/login", { userid: userid, pwd: pwd, ck: ck }, function (data) {
             if (data.code == 0) {
-                window.location.href ="/home?"; 
+                window.location.href ="/index.html?"; 
                
             } else {
                 alert(data.msg);
