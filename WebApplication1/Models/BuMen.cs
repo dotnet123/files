@@ -34,7 +34,8 @@ namespace WebApplication1.Models
         public string PWD { get; set; }
         [LiteDB.BsonField("name")]
         public string Name { get; set; }
-
+        [LiteDB.BsonField("tel")]
+        public string Tel { get; set; }
         [LiteDB.BsonIgnore]
         public int SeqNoX { get; set; }
 
@@ -42,6 +43,27 @@ namespace WebApplication1.Models
         public int SeqNo { get; set; }
         [LiteDB.BsonField("bumenid")]
         public long BuMenId { get; set; }
+        [LiteDB.BsonField("status")]
+        public int Status { get; set; }
+    }
+
+
+    public class Notice {
+        public long Id { get; set; }
+
+      
+        public string title { get; set; }
+
+    
+        public string content { get; set; }
+    
+        public DateTime ctime { get; set; }
+
+        [LiteDB.BsonField("userid")]
+        public long UserId { get; set; }
+        [LiteDB.BsonField("seqno")]
+        public int SeqNo { get; set; }
+     
         [LiteDB.BsonField("status")]
         public int Status { get; set; }
     }
