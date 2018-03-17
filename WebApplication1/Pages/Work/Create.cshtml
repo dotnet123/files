@@ -1,0 +1,60 @@
+﻿@page
+@model WebApplication1.Pages.Work.CreateModel
+@{
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+
+<script src="~/js/axios.min.js"></script>
+<script src="~/js/xss.min.js"></script>
+
+<div id="app">
+    <div class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="workDate" lay-verify="required|date">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容描述</label>
+            <div class="layui-input-block">
+                <div id="content"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit onclick="commit()">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('laydate', function () {
+        layui.laydate.render({
+            elem: '#workDate'
+        });
+    });
+
+    var E = window.wangEditor;
+    var editor = new E('#content');
+    editor.customConfig.menus = [
+        'head',
+        'bold',
+        'italic',
+        'underline'
+    ];
+    editor.create();
+
+    function commit() {
+        axios.post('/api/work', { workDate: $("#workDate").val(), content: filterXSS(editor.txt.html()) })
+            .then(function (res) {
+                console.log(res);
+                layer.close(w_index);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
+</script>
+

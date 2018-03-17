@@ -1,0 +1,73 @@
+﻿@page
+@model WebApplication1.Pages.Work.IndexModel
+@{
+    ViewData["Title"] = "Work";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+
+<script src="~/js/jquery-2.2.4.min.js"></script>
+<script src="~/js/win10.js"></script>
+<script src="~/js/win10.child.js"></script>
+
+<div class="layui-btn-group demoTable">
+    <button class="layui-btn" onclick="addWork()">新增日志</button>
+</div>
+<div id="table">
+    <table class="layui-table" id="work" lay-filter="work"></table>
+</div>
+
+<script type="text/html" id="operation">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    var w_index = 0;
+
+    window.windowClose = function () {
+        alert("P");
+    }
+
+    function addWork() {
+        w_index = Win10_child.openUrl('/work/create', "<img class='icon' src='./img/icon/doc.png'/>工作日志", [['90%', '90%'], ['5%', '5%']]);
+    }
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#work',
+            url: '/api/work/',
+            cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            cols: [[
+                { field: 'work_date', width: 180, title: '工作日期' },
+                { field: 'content', width: 580, title: '工作内容' },
+                { fixed: 'right', width: 150, align: 'center', toolbar: '#operation' }
+            ]]
+        });
+
+        table.on('tool(work)', function (obj) {
+            switch (obj.event) {
+                case "detail":
+                    w_index = Win10_child.openUrl('/work/detail?id=' + obj.data.id, "<img class='icon' src='./img/icon/doc.png'/>工作日志", [['90%', '90%'], ['5%', '5%']]);
+                    break;
+                case "edit":
+                    w_index = Win10_child.openUrl('/work/edit?id=' + obj.data.id, "<img class='icon' src='./img/icon/doc.png'/>工作日志", [['90%', '90%'], ['5%', '5%']]);
+                    break;
+                case "del":
+                    layer.confirm('确定要删除该日志吗？', function (index) {
+                        $.post('/api/work/delete/', { id: obj.data.id }).done(function () {
+                            obj.del();
+                            layer.close(index);
+                        }).fail(function (error) {
+                            console.log(error);
+                        });
+                    });
+                    break;
+                default:
+            }
+        });
+    });
+</script>
+
