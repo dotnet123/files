@@ -35,7 +35,6 @@ E:\github.com\files\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.runt
 E:\github.com\files\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.runtimeconfig.dev.json
 E:\github.com\files\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.dll
 E:\github.com\files\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.pdb
-E:\github.com\files\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.csprojResolveAssemblyReference.cache
 E:\github.com\files\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.csproj.CoreCompileInputs.cache
 E:\github.com\files\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.AssemblyInfoInputs.cache
 E:\github.com\files\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.AssemblyInfo.cs
