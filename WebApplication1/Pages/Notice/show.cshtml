@@ -1,0 +1,18 @@
+﻿@page
+@model WebApplication1.Pages.Notice.showModel
+@{
+    ViewData["Title"] = "show";
+    Layout = "~/Pages/Part/Layout1.cshtml";
+}
+
+<div class="layui-container">
+    <blockquote class="layui-elem-quote">@Model.currNotice.title</blockquote>
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            @Html.Raw(Model.currNotice.content)
+        </div>
+     
+    </div>
+    </div>
+
+
