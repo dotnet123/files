@@ -11,7 +11,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Pages.Customer
 {
-    public class ListModel : PageModel
+    public class ListModel : PageModelBase
     {
         public void OnGet()
         {

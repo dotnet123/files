@@ -66,5 +66,25 @@ namespace WebApplication1.Models
      
         [LiteDB.BsonField("status")]
         public int Status { get; set; }
+
+
+        [LiteDB.BsonIgnore]
+        public string UserName
+        {
+            get { return this.User.Name; }
+        }
+
+        [LiteDB.BsonIgnore]
+        public User User
+        {
+            get
+            {
+
+                var user = DbHelper.GetFirst<User>(P => P.Id == this.UserId);
+
+                return user ?? new User();
+            }
+        }
+
     }
 }
